@@ -1,11 +1,38 @@
 import ProductModel from "../models/Product.js";
 
+export const update = async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        await ProductModel.updateOne(
+            {
+                _id: productId,
+            }, 
+            {
+                name: req.body.name,
+                description: req.body.description,
+                imageUrl: req.body.imageUrl,
+                features: req.body.features,
+                user: req.userId,
+            },
+        );
+
+        res.json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Update attempt failed',
+        });
+    }
+};
+
 export const remove = async (req, res) => {
     try {
-        const productName = req.params.name;
-
-        // Используйте findOneAndDelete для удаления по имени
-        const doc = await ProductModel.findOneAndDelete({ name: productName });
+        const productId = req.params.id; 
+        
+        const doc = await ProductModel.findByIdAndDelete(productId);
 
         if (!doc) {
             return res.status(404).json({
@@ -26,9 +53,9 @@ export const remove = async (req, res) => {
 
 export const getOne = async (req, res) => {
     try{
-        const productName = req.params.name;
+        const productId = req.params.id;
 
-        const doc = await ProductModel.findOne({ name: productName });
+        const doc = await ProductModel.findById(productId);
 
         if (doc) {
             res.json(doc);

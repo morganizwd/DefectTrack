@@ -1,12 +1,12 @@
 import express from 'express'; 
 import mongoose from 'mongoose'; 
+import multer from 'multer';
 
 import { registerValidation, loginValidation, productCreateValidation } from './validations.js';
 
-import checkAuth from './utils/checkAuth.js';
+import { handleValidationErrors, checkAuth } from './utils/index.js';
 
-import * as UserController from './controllers/UserController.js';
-import * as ProductsController from './controllers/ProductsController.js';
+import { UserController, ProductsController } from './controllers/index.js'; 
 
 mongoose
     .connect('mongodb://127.0.0.1:27017/MyLocalDB')
@@ -15,17 +15,35 @@ mongoose
 
 const app = express();
 
-app.use(express.json()); 
+const storage = multer.diskStorage({ 
+    destination: (_, __, cb) => { 
+        cb(null, 'uploads') 
+    }, 
+    filename: (_, file, cb) => { 
+        cb(null, file.originalname) 
+    }, 
+});
 
-app.post('/auth/login', loginValidation, UserController.login); 
-app.post('/auth/register', registerValidation, UserController.register); 
+const upload = multer({ storage });
+
+app.use(express.json()); 
+app.use('/uploads', express.static('uploads')); 
+
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login); 
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register); 
 app.get('auth/me', checkAuth, UserController.getMe);
 
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+    res.json({
+        url: `/uploads/${req.file.originalname}`,
+    });
+});
+
 app.get('/products', ProductsController.getAll);
-app.post('/products', checkAuth, productCreateValidation, ProductsController.create);
-app.get('/products/:name', ProductsController.getOne);
-app.delete('/products/:name', checkAuth, ProductsController.remove);
-// app.patch('/products', ProductsController.update);
+app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, ProductsController.create);
+app.get('/products/:id', ProductsController.getOne);
+app.delete('/products/:id', checkAuth, ProductsController.remove);
+app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationErrors, ProductsController.update);
 
 app.listen(4444, (err) => {
     if (err) {
