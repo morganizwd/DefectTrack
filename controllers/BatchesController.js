@@ -21,7 +21,7 @@ export const create = async (req, res) => {
             message: 'Create attempt failed',
         });
     }
-}
+};
 
 export const getAll = async (req, res) => {
     try{
@@ -34,4 +34,68 @@ export const getAll = async (req, res) => {
             message: 'Search attempt failed',
         });
     }
-}
+};
+
+export const getOne = async (req, res) => {
+    try{
+        const batchId = req.params.id;
+
+        const doc = await BatchModel.findById(batchId);
+
+        if (doc) {
+            res.json(doc);
+        } else{
+            res.status(404).json({ message: 'Batch not found' });
+        }
+    } catch(err){
+        console.log(err);
+        res.status(500).json({
+            message: 'Search attempt failed',
+        });
+    }
+};
+
+export const remove = async (req, res) => {
+    try{
+        const batchId = req.params.id;
+
+        const doc = await BatchModel.findByIdAndDelete(batchId);
+
+        if (!doc) {
+            return res.status(404).json({
+                message: 'Batch doesn\'t exist',
+            });
+        }
+
+        res.json({
+            success: true,
+        });
+    } catch(err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Remove attempt failed',
+        });
+    }
+};
+
+export const update = async (req, res) => {
+    try {
+        const batchId = req.params.id;
+
+        const updateData = {
+            ...req.body,
+            user: req.userId, // Проверьте, нужно ли обновлять 'user'
+        };
+
+        await BatchModel.updateOne({ _id: batchId }, { $set: updateData });
+
+        res.json({
+            success: true,
+        });
+    } catch(err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Update attempt failed',
+        });
+    }
+};

@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import multer from 'multer';
 
-import { registerValidation, loginValidation, productCreateValidation, batchCreateValidation } from './validations.js';
+import { registerValidation, loginValidation, productCreateValidation, batchCreateValidation, batchUpdateValidation } from './validations.js';
 
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 
@@ -47,6 +47,9 @@ app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationE
 
 app.post('/batches', checkAuth, batchCreateValidation, handleValidationErrors, BatchesController.create);
 app.get('/batches', BatchesController.getAll);
+app.get('/batches/:id', BatchesController.getOne);
+app.delete('/batches/:id', checkAuth, BatchesController.remove);
+app.patch('/batches/:id', checkAuth, batchUpdateValidation, handleValidationErrors, BatchesController.update);
 
 app.listen(4444, (err) => {
     if (err) {

@@ -26,4 +26,13 @@ export const batchCreateValidation = [
     body('products.*', 'Invalid product ID').optional().isMongoId(),
     body('imageUrl', 'Invalid url').optional().isURL(),
     body('description', 'Enter product\'s descriptions').isLength({ min: 10 }).isString(),
+]; 
+export const batchUpdateValidation = [
+    body('name', 'Enter batch name').optional().isLength({ min: 3 }).isString(),
+    body('manufactureDate', 'Enter valid manufacture date').optional().isISO8601().toDate(),
+    body('description', 'Enter product\'s descriptions').optional().isLength({ min: 10 }).isString(),
+    body('imageUrl', 'Invalid url').optional().isURL(),
+    body('products', 'Invalid products array').optional().isArray(),
+    body('products.*', 'Invalid product ID').optional().isMongoId(),
+    // Проверьте, нужно ли обновлять поле 'user'
 ];
