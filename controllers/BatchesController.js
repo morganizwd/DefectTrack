@@ -10,6 +10,7 @@ export const create = async (req, res) => {
             imageUrl: req.body.imageUrl,
             user: req.userId,
             products: req.body.products,
+            defectedProducts: req.body.defectedProducts,
         });
 
         const batch = await doc.save();
