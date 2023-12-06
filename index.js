@@ -2,11 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import multer from 'multer';
 
-import { registerValidation, loginValidation, productCreateValidation } from './validations.js';
+import { registerValidation, loginValidation, productCreateValidation, batchCreateValidation } from './validations.js';
 
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 
-import { UserController, ProductsController } from './controllers/index.js'; 
+import { UserController, ProductsController, BatchesController } from './controllers/index.js'; 
 
 mongoose
     .connect('mongodb://127.0.0.1:27017/MyLocalDB')
@@ -44,6 +44,9 @@ app.post('/products', checkAuth, productCreateValidation, handleValidationErrors
 app.get('/products/:id', ProductsController.getOne);
 app.delete('/products/:id', checkAuth, ProductsController.remove);
 app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationErrors, ProductsController.update);
+
+app.post('/batches', checkAuth, batchCreateValidation, handleValidationErrors, BatchesController.create);
+app.get('/batches', BatchesController.getAll);
 
 app.listen(4444, (err) => {
     if (err) {

@@ -18,3 +18,12 @@ export const productCreateValidation = [
     body('features', 'Enter product\'s features').optional().isArray(), 
     body('imageUrl', 'Invalid url').optional().isURL(),
 ];
+
+export const batchCreateValidation = [
+    body('name', 'Enter batch name').isLength({ min: 3 }).isString(),
+    body('manufactureDate', 'Enter valid manufacture date').isISO8601().toDate(),
+    body('products', 'Invalid products array').optional().isArray(),
+    body('products.*', 'Invalid product ID').optional().isMongoId(),
+    body('imageUrl', 'Invalid url').optional().isURL(),
+    body('description', 'Enter product\'s descriptions').isLength({ min: 10 }).isString(),
+];
