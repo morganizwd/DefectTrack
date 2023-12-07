@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ComissionSchema = new mongoose.Schema(
+const CommissionSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -17,4 +17,4 @@ const ComissionSchema = new mongoose.Schema(
     }
 ); 
 
-export default mongoose.model('Comission', ComissionSchema);
+export default mongoose.model('Comission', CommissionSchema);

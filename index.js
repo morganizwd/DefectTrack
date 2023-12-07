@@ -2,11 +2,21 @@ import express from 'express';
 import mongoose from 'mongoose'; 
 import multer from 'multer';
 
-import { registerValidation, loginValidation, productCreateValidation, batchCreateValidation, batchUpdateValidation } from './validations.js';
+import { 
+    registerValidation, 
+    loginValidation, 
+    productCreateValidation, 
+    batchCreateValidation, 
+    batchUpdateValidation , 
+    CommissionCreateValidation } from './validations.js';
 
 import { handleValidationErrors, checkAuth } from './utils/index.js';
 
-import { UserController, ProductsController, BatchesController } from './controllers/index.js'; 
+import { 
+    UserController, 
+    ProductsController, 
+    BatchesController,
+    CommissionController } from './controllers/index.js'; 
 
 mongoose
     .connect('mongodb://127.0.0.1:27017/MyLocalDB')
@@ -50,6 +60,8 @@ app.get('/batches', BatchesController.getAll);
 app.get('/batches/:id', BatchesController.getOne);
 app.delete('/batches/:id', checkAuth, BatchesController.remove);
 app.patch('/batches/:id', checkAuth, batchUpdateValidation, handleValidationErrors, BatchesController.update);
+
+app.post('/commission', checkAuth, CommissionCreateValidation, handleValidationErrors, CommissionController.create);
 
 app.listen(4444, (err) => {
     if (err) {

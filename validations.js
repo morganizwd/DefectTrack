@@ -29,6 +29,7 @@ export const batchCreateValidation = [
     body('imageUrl', 'Invalid url').optional().isURL(),
     body('description', 'Enter product\'s descriptions').isLength({ min: 10 }).isString(),
 ]; 
+
 export const batchUpdateValidation = [
     body('name', 'Enter batch name').optional().isLength({ min: 3 }).isString(),
     body('manufactureDate', 'Enter valid manufacture date').optional().isISO8601().toDate(),
@@ -38,4 +39,10 @@ export const batchUpdateValidation = [
     body('products.*', 'Invalid product ID').optional().isMongoId(),
     body('defectedProducts', 'Invalid products array').optional().isArray(),
     body('defectedProducts.*', 'Invalid product ID').optional().isMongoId(), 
+];
+
+export const CommissionCreateValidation = [
+    body('name', 'Enter comission person name').isLength({ min: 2 }).isString(),
+    body('jobTitle', 'Enter comission person job title').isLength({ min: 2 }).isString(), 
+    body('imageUrl', 'Invalid url').optional().isURL(),
 ];
