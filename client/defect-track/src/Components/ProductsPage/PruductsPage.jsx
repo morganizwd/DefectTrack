@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
 import ProductCard from './ProductCard';
+import { Container, Grid } from '@mui/material';
 
 const ProductPage = () => {
     const [products, setProducts] = useState([]);
@@ -16,13 +16,16 @@ const ProductPage = () => {
     }, []);
 
     return (
-        <Grid container spacing={2}>
+        <Container maxWidth="lg">
+            <Grid container spacing={2}>
             {products.map(product => (
                 <Grid item xs={12} sm={6} md={4} key={product._id}>
                     <ProductCard product={product} />
                 </Grid>
             ))}
-        </Grid>
+            </Grid>
+        </Container>
+        
     );
 };
 

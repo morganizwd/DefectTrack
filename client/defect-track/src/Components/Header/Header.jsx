@@ -12,8 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
-const pages = ['About Us', 'Products', 'Bathces', 'Commission', 'Defect reports'];
+const pages = [
+  { title: 'About Us', path: '/' },
+  { title: 'Products', path: '/products' },
+  { title: 'Batches', path: '/batches' },
+  { title: 'Commission', path: '/commission' },
+  // Добавьте остальные страницы здесь
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -87,9 +94,11 @@ function Header() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                  <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                      <Link to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <Typography textAlign="center">{page.title}</Typography>
+                      </Link>
+                  </MenuItem>
               ))}
             </Menu>
           </Box>
@@ -112,15 +121,17 @@ function Header() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+          {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                  key={page.title}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                  <Link to={page.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                      {page.title}
+                  </Link>
               </Button>
-            ))}
+          ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

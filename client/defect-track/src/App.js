@@ -4,6 +4,7 @@ import Footer from './Components/Footer/Footer.jsx';
 import AboutUs from './Components/AboutUsPage/AboutUsPage.jsx';
 import ProductPage from './Components/ProductsPage/PruductsPage.jsx';
 import BatchesPage from './Components/BatchesPage/BatchesPage.jsx';
+import CommissionPage from './Components/CommissionPage/CommissionPage.jsx';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<AboutUs />} />
           <Route path='/products' element={<ProductPage/>} />
           <Route path='/batches' element={<BatchesPage/>} />
+          <Route path='/commission' element={<CommissionPage/>} />
         </Routes>
       <Footer/>
     </div>
