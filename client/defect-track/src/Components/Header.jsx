@@ -15,13 +15,18 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
 const pages = [
-  { title: 'About Us', path: '/' },
+  { title: 'Home', path: '/'},
+  { title: 'About Us', path: '/about' },
   { title: 'Products', path: '/products' },
   { title: 'Batches', path: '/batches' },
   { title: 'Commission', path: '/commission' },
   // Добавьте остальные страницы здесь
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  { title: 'Login', path: '/login'},
+  { title: 'Register', path: '/registration'}
+];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -61,7 +66,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            DefectTrack
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -158,7 +163,9 @@ function Header() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Link to={setting.path} style={{textAlign: 'center', textDecoration: 'none', color: 'inherit'}}>
+                    {setting.title}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
