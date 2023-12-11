@@ -11,10 +11,6 @@ const initialState = {
         items: [],
         status: 'loading',
     },
-    features: {
-        items: [],
-        status: 'loading'
-    },
 };
 
 const productSlice = createSlice({
