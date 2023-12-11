@@ -24,8 +24,8 @@ const BatchesPage = () => {
                     </Grid>
                 :
                     batches.items.map(batch => (
-                        <Grid item xs={12} sm={6} md={4} key={batch._id}> {/* Исправлено на batch._id */}
-                            <BatchCard batch={batch} /> {/* Исправлена опечатка в имени компонента */}
+                        <Grid item xs={12} sm={6} md={4} key={batch._id}> 
+                            <BatchCard batch={batch} />
                         </Grid>
                     ))
                 }

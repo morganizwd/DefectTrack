@@ -1,28 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCommission } from '../../Redux/slices/Commission';
+import { Container, Grid, CircularProgress } from '@mui/material';
 import CommissionMemberCard from './CommissionMemberCard';
 
 const CommissionPage = () => {
-    const [members, setMembers] = useState([]);
+    const dispatch = useDispatch();
+    const { commission } = useSelector(state => state.commission);
+    
+    const isCommissionLoading = commission.status === 'loading';
 
-    useEffect(() => {
-        const fetchMembers = async () => {
-            const response = await fetch('commission'); // Укажите правильный URL
-            const data = await response.json();
-            setMembers(data);
-        };
-
-        fetchMembers();
-    }, []);
+    React.useEffect(() => {
+        dispatch(fetchCommission());
+    }, [dispatch]);
 
     return (
-        <Grid container spacing={2}>
-            {members.map(member => (
-                <Grid item xs={12} sm={6} md={4} key={member._id}>
-                    <CommissionMemberCard member={member} />
-                </Grid>
-            ))}
-        </Grid>
+        <Container maxWidth="lg" style={{ marginTop: '20px', marginBottom: '20px' }}>
+            <Grid container spacing={2}>
+                {isCommissionLoading ? 
+                    <Grid item xs={12} style={{ textAlign: 'center' }}>
+                        <CircularProgress />
+                    </Grid>
+                :
+                    commission.items.map((member, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={member._id}>
+                            <CommissionMemberCard member={member} />
+                        </Grid>
+                    ))
+                }
+            </Grid>
+        </Container>
     );
 };
 
