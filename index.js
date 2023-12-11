@@ -20,9 +20,7 @@ import {
     BatchesController,
     CommissionController } from './controllers/index.js'; 
 
-mongoose
-    // .connect('mongodb://127.0.0.1:27017/MyLocalDB') // for laptop 
-    // .connect('mongodb://192.168.100.4:27017/MyLocalDB') // for pc
+mongoose 
     .connect('mongodb+srv://admin:Hesus2016@cluster0.vgtv5yo.mongodb.net/DefectTrack')
     .then(() => console.log('DB OK'))
     .catch((err) => console.log('DB ERROR', err)); 

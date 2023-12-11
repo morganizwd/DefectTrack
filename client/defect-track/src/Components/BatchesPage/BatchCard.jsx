@@ -25,6 +25,9 @@ const BathcCard = ({ batch }) => {
                         ))}
                     </ul>
                 )}
+                <Typography variant='body2' color="text.secondary">
+                    ID товаров с деффектами
+                </Typography>
                 {batch.defectedProducts && (
                     <ul>
                         {batch.defectedProducts.map((defectedProduct, index) => (
