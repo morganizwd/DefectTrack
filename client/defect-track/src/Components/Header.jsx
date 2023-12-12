@@ -199,7 +199,7 @@ function Header() {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-                <Link to={'/register'} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', width: '100%' }}>
+                <Link to={'/registration'} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', width: '100%' }}>
                   <Typography>
                     Создать аккаунт
                   </Typography>
