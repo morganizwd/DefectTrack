@@ -6,7 +6,15 @@ import Typography from '@mui/material/Typography';
 
 const CommissionMemberCard = ({ member }) => {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ 
+            maxWidth: 345, 
+            '&:hover': {
+              boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', // Эффект тени при наведении
+              transform: 'scale(1.03)', // Немного увеличиваем карточку
+              transition: 'transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out' // Плавный переход
+            }
+          }}
+          >
             {member.imageUrl && (
                 <CardMedia component="img" height="140" image={member.imageUrl} alt={member.name} />
             )}

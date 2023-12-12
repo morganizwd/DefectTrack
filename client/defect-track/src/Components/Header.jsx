@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../Redux/slices/auth';
 
 const pages = [
   { title: 'Home', path: '/'},
@@ -20,12 +22,6 @@ const pages = [
   { title: 'Products', path: '/products' },
   { title: 'Batches', path: '/batches' },
   { title: 'Commission', path: '/commission' },
-  // Добавьте остальные страницы здесь
-];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const settings = [
-  { title: 'Login', path: '/login'},
-  { title: 'Register', path: '/registration'}
 ];
 
 function Header() {
@@ -46,6 +42,18 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const isAuth = useSelector(selectIsAuth);
+
+  const settings = isAuth
+    ? [
+        { title: 'Profile', path: '/profile' },
+        { title: 'Logout', path: '/logout' }
+      ]
+    : [
+        { title: 'Login', path: '/login' },
+        { title: 'Register', path: '/registration' }
+      ];
 
   return (
     <AppBar position="static">
@@ -126,7 +134,7 @@ function Header() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          {pages.map((page) => (
+            {pages.map((page) => (
               <Button
                   key={page.title}
                   onClick={handleCloseNavMenu}
@@ -136,7 +144,7 @@ function Header() {
                       {page.title}
                   </Link>
               </Button>
-          ))}
+            ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -162,8 +170,8 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Link to={setting.path} style={{textAlign: 'center', textDecoration: 'none', color: 'inherit'}}>
+                <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+                  <Link to={setting.path} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
                     {setting.title}
                   </Link>
                 </MenuItem>
@@ -175,4 +183,5 @@ function Header() {
     </AppBar>
   );
 }
+
 export default Header;
