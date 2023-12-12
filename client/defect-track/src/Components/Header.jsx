@@ -13,8 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectIsAuth } from '../Redux/slices/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectIsAuth } from '../Redux/slices/auth';
 
 const pages = [
   { title: 'Home', path: '/'},
@@ -28,6 +28,9 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,8 +45,20 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const isAuth = useSelector(selectIsAuth);
+  
+  const onClickLogout = () => {
+    if (window.confirm('Вы действительно хотие выйти из учетной записи?')) {
+      dispatch(logout());
+    }
+  };
+  
+  const onMenuItemClick = (path) => {
+    if (path === '/logout') {
+      onClickLogout();
+    } else {
+      handleCloseUserMenu();
+    }
+  };
 
   const settings = isAuth
     ? [
@@ -54,7 +69,7 @@ function Header() {
         { title: 'Login', path: '/login' },
         { title: 'Register', path: '/registration' }
       ];
-
+      
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -170,11 +185,11 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
-                  <Link to={setting.path} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
-                    {setting.title}
-                  </Link>
-                </MenuItem>
+                <MenuItem key={setting.title} onClick={() => onMenuItemClick(setting.path)}>
+                <Link to={setting.path} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
+                  {setting.title}
+                </Link>
+              </MenuItem>
               ))}
             </Menu>
           </Box>
