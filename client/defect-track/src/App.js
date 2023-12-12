@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Header from './Components/Header.jsx';
 import Footer from './Components/Footer.jsx';
@@ -10,8 +11,19 @@ import LoginPage from './Components/AuthPages/LogInPage.jsx';
 import HomePage from './Components/HomePage.jsx';
 import { Routes, Route } from 'react-router-dom';
 import { CssBaseline, Box } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAuthMe, selectIsAuth } from './Redux/slices/auth.js';
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
+
+  React.useEffect(() => {
+    if (window.localStorage.getItem('token')) {
+      dispatch(fetchAuthMe());
+    }
+  }, [dispatch]);  
+
   return (
     <div className="App">
       <CssBaseline/>

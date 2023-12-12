@@ -49,27 +49,10 @@ function Header() {
   const onClickLogout = () => {
     if (window.confirm('Вы действительно хотие выйти из учетной записи?')) {
       dispatch(logout());
-    }
-  };
-  
-  const onMenuItemClick = (path) => {
-    if (path === '/logout') {
-      onClickLogout();
-    } else {
-      handleCloseUserMenu();
+      window.localStorage.removeItem('token');
     }
   };
 
-  const settings = isAuth
-    ? [
-        { title: 'Profile', path: '/profile' },
-        { title: 'Logout', path: '/logout' }
-      ]
-    : [
-        { title: 'Login', path: '/login' },
-        { title: 'Register', path: '/registration' }
-      ];
-      
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -168,7 +151,8 @@ function Header() {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            <Menu
+            {isAuth ? (
+              <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -184,14 +168,45 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting.title} onClick={() => onMenuItemClick(setting.path)}>
-                <Link to={setting.path} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}>
-                  {setting.title}
+              <MenuItem>
+                  <Typography onClick={onClickLogout}>
+                    Выйти
+                  </Typography>
+                </MenuItem>
+            </Menu>
+            ) : (
+              <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to={'/login'} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', width: '100%' }}>
+                  <Typography>
+                    Войти
+                  </Typography>
                 </Link>
               </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to={'/register'} style={{ textAlign: 'center', textDecoration: 'none', color: 'inherit', width: '100%' }}>
+                  <Typography>
+                    Создать аккаунт
+                  </Typography>
+                </Link>
+              </MenuItem>
             </Menu>
+            )}
           </Box>
         </Toolbar>
       </Container>
