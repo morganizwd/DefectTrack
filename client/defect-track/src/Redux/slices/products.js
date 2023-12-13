@@ -6,6 +6,11 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
     return data;
 });
 
+export const createProduct = createAsyncThunk('products/createProduct', async (productData) => {
+    const { data } = await axios.post('/products', productData);
+    return data;
+});
+
 const initialState = {
     products: {
         items: [],
@@ -30,6 +35,10 @@ const productSlice = createSlice({
             .addCase(fetchProducts.rejected, (state) => {
                 state.products.items = [];
                 state.products.status = 'error';
+            })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                // Добавьте логику для обновления состояния
+                state.products.items.push(action.payload);
             });
     },
 });

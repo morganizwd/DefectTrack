@@ -6,6 +6,11 @@ export const fetchBatches = createAsyncThunk('batches/fetchBathces', async () =>
     return data;
 });
 
+export const createBatch = createAsyncThunk('batches/createBatch', async (batchData) => {
+    const { data } = await axios.post('/batches', batchData);
+    return data;
+});
+
 const initialState = {
     batches: {
         items: [],
@@ -30,6 +35,10 @@ const batchSlice = createSlice({
             .addCase(fetchBatches.rejected, (state) => {
                 state.batches.items = [];
                 state.batches.status = 'error';
+            })
+            .addCase(createBatch.fulfilled, (state, action) => {
+                // Добавьте логику для обновления состояния
+                state.batches.items.push(action.payload);
             });
     },
 });

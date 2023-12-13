@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import { CssBaseline, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe, selectIsAuth } from './Redux/slices/auth.js';
+import CreateBatchPage from './Components/CreateBatch.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
               <Route path='/products' element={<ProductPage/>} />
               <Route path='/batches' element={<BatchesPage/>} />
               <Route path='/commission' element={<CommissionPage/>} />
+              <Route path='/create-batch' element={<CreateBatchPage/>} />
               <Route path='/registration' element={<RegistrationPage/>} />
               <Route path='/login' element={<LoginPage/>} />
             </Routes>

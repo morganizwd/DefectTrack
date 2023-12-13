@@ -16,14 +16,14 @@ export const registerValidation = [
 //priducts valid
 export const productCreateValidation = [
     body('name', 'Enter product\'s name').isLength({ min: 3 }).isString(),
-    body('description', 'Enter product\'s descriptions').isLength({ min: 10 }).isString(),
+    body('description', 'Enter product\'s descriptions').isLength({ min: 0 }).isString(),
     body('features', 'Enter product\'s features').optional().isArray(), 
     body('imageUrl', 'Invalid url').optional().isURL(),
 ];
 
 export const productUpdateValidation = [
     body('name', 'Enter product\'s name').optional().isLength({ min: 3 }).isString(),
-    body('description', 'Enter product\'s descriptions').optional().isLength({ min: 10 }).isString(),
+    body('description', 'Enter product\'s descriptions').optional().isLength({ min: 0 }).isString(),
     body('features', 'Enter product\'s features').optional().isArray(), 
     body('imageUrl', 'Invalid url').optional().isURL(),
 ];
@@ -37,13 +37,13 @@ export const batchCreateValidation = [
     body('defectedProducts', 'Invalid products array').optional().isArray(),
     body('defectedProducts.*', 'Invalid product ID').optional().isMongoId(),
     body('imageUrl', 'Invalid url').optional().isURL(),
-    body('description', 'Enter product\'s descriptions').isLength({ min: 10 }).isString(),
+    body('description', 'Enter product\'s descriptions').isLength({ min: 0 }).isString(),
 ]; 
 
 export const batchUpdateValidation = [
     body('name', 'Enter batch name').optional().isLength({ min: 3 }).isString(),
     body('manufactureDate', 'Enter valid manufacture date').optional().isISO8601().toDate(),
-    body('description', 'Enter product\'s descriptions').optional().isLength({ min: 10 }).isString(),
+    body('description', 'Enter product\'s descriptions').optional().isLength({ min: 0 }).isString(),
     body('imageUrl', 'Invalid url').optional().isURL(),
     body('products', 'Invalid products array').optional().isArray(),
     body('products.*', 'Invalid product ID').optional().isMongoId(),
