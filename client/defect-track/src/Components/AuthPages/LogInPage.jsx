@@ -11,7 +11,6 @@ const LoginPage = () => {
   const { 
     register, 
     handleSubmit, 
-    setError, 
     formState: { errors, isValid } 
   } = useForm({
     defaultValues: {
@@ -76,6 +75,7 @@ const LoginPage = () => {
             {... register('password', { required: 'Укажите пароль' })}
           />
           <Button
+            disabled={!isValid}
             type="submit"
             fullWidth
             variant="contained"
