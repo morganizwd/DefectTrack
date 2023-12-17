@@ -11,6 +11,11 @@ export const createBatch = createAsyncThunk('batches/createBatch', async (batchD
     return data;
 });
 
+export const deleteBatch = createAsyncThunk('batches/deleteBatch', async (batchId) => {
+    const response = await axios.delete(`/batches/${batchId}`);
+    return response.data;
+});
+
 const initialState = {
     batches: {
         items: [],
@@ -37,8 +42,10 @@ const batchSlice = createSlice({
                 state.batches.status = 'error';
             })
             .addCase(createBatch.fulfilled, (state, action) => {
-                // Добавьте логику для обновления состояния
                 state.batches.items.push(action.payload);
+            })
+            .addCase(deleteBatch.fulfilled, (state, action) => {
+                state.batches.items = state.batches.items.filter(batch => batch._id !== action.payload._id);
             });
     },
 });

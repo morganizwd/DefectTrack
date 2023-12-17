@@ -3,8 +3,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
 
-const BatchCard = ({ batch }) => {
+const BatchCard = ({ batch, isSelected, onSelectionChange }) => {
     return (
         <Card 
           sx={{ 
@@ -45,6 +46,11 @@ const BatchCard = ({ batch }) => {
                     </ul>
                 )}
             </CardContent>
+            <Checkbox
+                checked={isSelected}
+                onChange={(e) => onSelectionChange(e.target.checked, batch._id)}
+                inputProps={{ 'aria-label': 'Select batch' }}
+            />
         </Card>
     )
 };
