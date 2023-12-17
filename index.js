@@ -46,7 +46,7 @@ app.use('/uploads', express.static('uploads'));
 // auth pathes 
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login); 
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register); 
-app.get('auth/me', checkAuth, UserController.getMe);
+app.get('/auth/me', checkAuth, UserController.getMe);
 
 //media upload pathes
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {

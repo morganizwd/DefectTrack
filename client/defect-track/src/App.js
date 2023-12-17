@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import './App.css';
 import Header from './Components/Header.jsx';
 import Footer from './Components/Footer.jsx';
@@ -23,7 +24,7 @@ function App() {
     if (window.localStorage.getItem('token')) {
       dispatch(fetchAuthMe());
     }
-  }, [dispatch]);  
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -37,9 +38,11 @@ function App() {
               <Route path='/products' element={<ProductPage/>} />
               <Route path='/batches' element={<BatchesPage/>} />
               <Route path='/commission' element={<CommissionPage/>} />
-              <Route path='/create-batch' element={<CreateBatchPage/>} />
-              <Route path='/registration' element={<RegistrationPage/>} />
-              <Route path='/login' element={<LoginPage/>} />
+              {isAuth && <Route path='/create-batch' element={<CreateBatchPage/>} />}
+              {!isAuth && <Route path='/registration' element={<RegistrationPage/>} />}
+              {!isAuth && <Route path='/login' element={<LoginPage/>} />}
+              {isAuth && <Route path="*" element={<Navigate to="/" />} />}
+              {!isAuth && <Route path="*" element={<Navigate to="/login" />} />}
             </Routes>
           </Box>
         <Footer/>
