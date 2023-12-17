@@ -15,6 +15,7 @@ import { CssBaseline, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe, selectIsAuth } from './Redux/slices/auth.js';
 import CreateBatchPage from './Components/CreateBatch.jsx';
+import ReportPage from './Components/ReportPage.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
               <Route path='/products' element={<ProductPage/>} />
               <Route path='/batches' element={<BatchesPage/>} />
               <Route path='/commission' element={<CommissionPage/>} />
+              <Route path='/reports' element={<ReportPage/>} />
               {isAuth && <Route path='/create-batch' element={<CreateBatchPage/>} />}
               {!isAuth && <Route path='/registration' element={<RegistrationPage/>} />}
               {!isAuth && <Route path='/login' element={<LoginPage/>} />}

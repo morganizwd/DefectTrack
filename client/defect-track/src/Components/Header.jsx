@@ -22,6 +22,7 @@ const pages = [
   { title: 'Products', path: '/products' },
   { title: 'Batches', path: '/batches' },
   { title: 'Commission', path: '/commission' },
+  { title: 'Reports', path: '/reports' },
 ];
 
 function Header() {
