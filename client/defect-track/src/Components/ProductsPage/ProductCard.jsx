@@ -1,10 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteProduct, updateProduct } from '../../Redux/slices/products';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const ProductCard = ({ product }) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = () => {
+        dispatch(deleteProduct(product._id));
+    };
+
+    const handleUpdate = () => {
+        const updatedProduct = { ...product, isDefected: true };
+        dispatch(updateProduct({ productId: product._id, updateData: updatedProduct }));
+    };
     return (
         <Card 
           sx={{ 
@@ -32,6 +45,20 @@ const ProductCard = ({ product }) => {
                     </ul>
                 )}
             </CardContent>
+            <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleDelete}
+            >
+                Удалить
+            </Button>
+            <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handleUpdate}
+            >
+                Пометить как дефектный
+            </Button>
         </Card>
     );
 };

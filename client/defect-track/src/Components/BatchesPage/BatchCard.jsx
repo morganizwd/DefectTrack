@@ -1,11 +1,21 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import { updateDefectedProducts } from '../../Redux/slices/batches';
 
 const BatchCard = ({ batch, isSelected, onSelectionChange }) => {
+    const dispatch = useDispatch();
+
+    const handleUpdateDefectedProducts = () => {
+        // Вызов действия для обновления
+        dispatch(updateDefectedProducts({ batchId: batch._id, productIds: batch.products }));
+    };
+
     return (
         <Card 
           sx={{ 
@@ -51,6 +61,13 @@ const BatchCard = ({ batch, isSelected, onSelectionChange }) => {
                 onChange={(e) => onSelectionChange(e.target.checked, batch._id)}
                 inputProps={{ 'aria-label': 'Select batch' }}
             />
+            <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handleUpdateDefectedProducts}
+            >
+                Обновить дефектные товары
+            </Button>
         </Card>
     )
 };

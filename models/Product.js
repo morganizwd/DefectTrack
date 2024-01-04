@@ -9,7 +9,7 @@ const ProductSchema = new mongoose.Schema(
         },
         description: {
             type: String,
-            required: true, 
+            required: true,
         },
         features: {
             type: Array,
@@ -20,11 +20,14 @@ const ProductSchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
-        imageUrl: String,
-    }, 
+        isDefected: {
+            type: Boolean,
+            default: false,
+        },
+    },
     {
         timestamps: true,
     },
-); 
+);
 
 export default mongoose.model('Product', ProductSchema);

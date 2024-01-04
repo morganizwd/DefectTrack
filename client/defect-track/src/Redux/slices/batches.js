@@ -16,6 +16,16 @@ export const deleteBatch = createAsyncThunk('batches/deleteBatch', async (batchI
     return response.data;
 });
 
+export const updateDefectedProducts = createAsyncThunk(
+    'batches/updateDefectedProducts',
+    async ({ batchId, productIds }) => {
+        const response = await axios.put(`/batches/${batchId}/updateDefectedProducts`, {
+            products: productIds,
+        });
+        return response.data;
+    }
+);
+
 const initialState = {
     batches: {
         items: [],
@@ -46,6 +56,12 @@ const batchSlice = createSlice({
             })
             .addCase(deleteBatch.fulfilled, (state, action) => {
                 state.batches.items = state.batches.items.filter(batch => batch._id !== action.payload._id);
+            })
+            .addCase(updateDefectedProducts.fulfilled, (state, action) => {
+                const index = state.batches.items.findIndex(batch => batch._id === action.payload._id);
+                if (index !== -1) {
+                    state.batches.items[index] = action.payload;
+                }
             });
     },
 });

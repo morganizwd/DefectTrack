@@ -1,4 +1,5 @@
 import BatchModel from '../models/Batch.js';
+import ProductModel from '../models/Product.js';
 
 export const create = async (req, res) => {
     try{ 
@@ -97,5 +98,26 @@ export const update = async (req, res) => {
         res.status(500).json({
             message: 'Update attempt failed',
         });
+    }
+};
+
+export const updateDefectedProducts = async (req, res) => {
+    try {
+        const batchId = req.params.batchId;
+
+        const defectedProducts = await ProductModel.find({
+            _id: { $in: req.body.products }, 
+            isDefected: true
+        }).select('_id');
+
+        await BatchModel.updateOne(
+            { _id: batchId },
+            { $set: { defectedProducts: defectedProducts.map(product => product._id) } }
+        );
+
+        res.json({ success: true });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Failed to update defected products' });
     }
 };

@@ -10,12 +10,13 @@ import CommissionPage from './Components/CommissionPage/CommissionPage.jsx';
 import RegistrationPage from './Components/AuthPages/RegestrationPage.jsx';
 import LoginPage from './Components/AuthPages/LogInPage.jsx';
 import HomePage from './Components/HomePage.jsx';
+import CreateBatchPage from './Components/CreateBatch.jsx';
+import ReportPage from './Components/ReportPage.jsx';
 import { Routes, Route } from 'react-router-dom';
 import { CssBaseline, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe, selectIsAuth } from './Redux/slices/auth.js';
-import CreateBatchPage from './Components/CreateBatch.jsx';
-import ReportPage from './Components/ReportPage.jsx';
+
 
 function App() {
   const dispatch = useDispatch();

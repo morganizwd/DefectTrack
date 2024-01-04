@@ -11,9 +11,9 @@ export const update = async (req, res) => {
             {
                 name: req.body.name,
                 description: req.body.description,
-                imageUrl: req.body.imageUrl,
                 features: req.body.features,
                 user: req.userId,
+                isDefected: req.body.isDefected,
             },
         );
 
@@ -88,9 +88,9 @@ export const create = async (req, res) => {
         const doc = new ProductModel({
             name: req.body.name,
             description: req.body.description,
-            imageUrl: req.body.imageUrl,
             features: req.body.features,
             user: req.userId,
+            isDefected: req.body.isDefected,
         });
 
         const product = await doc.save();

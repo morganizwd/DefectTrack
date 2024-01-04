@@ -65,6 +65,7 @@ app.patch('/products/:id', checkAuth, productUpdateValidation, handleValidationE
 // batches pathes
 app.post('/batches', checkAuth, batchCreateValidation, handleValidationErrors, BatchesController.create);
 app.get('/batches', BatchesController.getAll);
+app.put('/batches/:batchId/updateDefectedProducts', BatchesController.updateDefectedProducts);
 app.get('/batches/:id', BatchesController.getOne);
 app.delete('/batches/:id', checkAuth, BatchesController.remove);
 app.patch('/batches/:id', checkAuth, batchUpdateValidation, handleValidationErrors, BatchesController.update);
